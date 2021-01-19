@@ -6,37 +6,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@RequestMapping("notes/")
 public class NoteController {
 
     @Autowired
     private NoteService noteService;
 
-    @PostMapping("notes/create")
+    @GetMapping("ping")
+    public String ping() {
+        return "Ping Successful.";
+    }
+
+    @PostMapping("create")
     public String createNote(@RequestBody Note note) {
        String identifier = noteService.createNote(note);
        return identifier;
     }
 
-    @GetMapping("notes/allNotes")
+    @GetMapping("allNotes")
     public List<Note> retrieveAllNotes() {
         return noteService.retrieveAllNotes();
     }
 
-    @GetMapping("notes/{identifier}")
-    public Optional<Note> retrieveNote(@PathVariable String identifier) {
+    @GetMapping("{identifier}")
+    public Note retrieveNote(@PathVariable String identifier) {
         Note note = noteService.retrieveOneNote(identifier);
-        return Optional.ofNullable(note);
+        return note;
     }
 
-    @DeleteMapping("notes/{identifier}")
+    @DeleteMapping("{identifier}")
     public void deleteNote(@PathVariable String identifier) {
+
         noteService.deleteNote(identifier);
     }
 
-    @DeleteMapping("notes/allNotes")
+    @DeleteMapping("allNotes")
     public void deleteMapping() {
         noteService.deleteAllNotes();
     }

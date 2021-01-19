@@ -17,6 +17,8 @@ public class NoteService {
 
     /**
      * create a new note
+     * @param note
+     * @return
      */
     public String createNote(Note note) {
 
@@ -27,6 +29,7 @@ public class NoteService {
             Note noteBuilt = Note.builder()
                     .note(note.getNote())
                     .identifier(identifier)
+                    .title(note.getTitle())
                     .createDate(new Date())
                     .modifiedDate(new Date())
                     .completed(false)
@@ -38,7 +41,8 @@ public class NoteService {
     }
 
     /**
-     * retrieve a list of all notes
+     * Retrieves a list of notes
+     * @return
      */
     public List<Note> retrieveAllNotes() {
         List<Note> noteList = noteRepository.findAll();
@@ -46,19 +50,25 @@ public class NoteService {
     }
 
     /**
-     * retrieve one single note
+     * retrieve a single note
+     * @param identifier
+     * @return
      */
     public Note retrieveOneNote(String identifier) {
         return noteRepository.findOne(identifier);
     }
 
     /**
-     * delete a note
+     * delete a single note
+     * @param identifier
      */
     public void deleteNote(String identifier) {
-        noteRepository.delete(identifier);
-    }
 
+        if (noteRepository.exists(identifier)) {
+            noteRepository.delete(identifier);
+        }
+
+    }
 
     /**
      * delete all notes

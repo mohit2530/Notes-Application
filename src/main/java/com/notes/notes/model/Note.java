@@ -20,6 +20,7 @@ public class Note {
     @Id
     private String identifier = null;
     private String note = null;
+    private String title = null;
     private Date createDate = null;
     private Date modifiedDate = null;
     private boolean completed;
