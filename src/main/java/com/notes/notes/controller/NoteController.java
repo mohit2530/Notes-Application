@@ -47,4 +47,13 @@ public class NoteController {
         noteService.deleteAllNotes();
     }
 
+    @PatchMapping("update")
+    public String updateNote(@RequestHeader String identifier, @RequestBody Note note) {
+
+        if (identifier != null) {
+            String newIdentifier = noteService.updateNote(identifier, note);
+            return newIdentifier;
+        }
+        return null;
+    }
 }

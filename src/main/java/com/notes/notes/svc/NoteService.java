@@ -78,5 +78,25 @@ public class NoteService {
     }
 
 
+    /**
+     * update the note
+     * @param identifier
+     * @return
+     */
+    public String updateNote(String identifier, Note newNote) {
+
+        if (noteRepository.exists(identifier)) {
+           Note original = noteRepository.findOne(identifier);
+
+           original.setNote(newNote.getNote());
+           original.setCompleted(newNote.isCompleted());
+           original.setModifiedDate(new Date());
+           original.setTitle(newNote.getTitle());
+
+           noteRepository.save(original);
+           return original.getIdentifier();
+        }
+        return null;
+    }
 }
 
